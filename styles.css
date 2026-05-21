@@ -43,10 +43,8 @@ input {
   min-height: 100dvh;
   overflow: hidden;
   background:
-    radial-gradient(ellipse 90% 44% at 31% 79%, rgba(90, 211, 207, 0.82) 0 30%, rgba(17, 97, 132, 0.68) 44%, transparent 68%),
-    radial-gradient(ellipse 52% 48% at 71% 26%, rgba(133, 142, 230, 0.9) 0 42%, rgba(36, 59, 161, 0.76) 61%, transparent 72%),
-    radial-gradient(ellipse 74% 48% at 18% 31%, rgba(247, 244, 226, 0.96) 0 38%, transparent 58%),
-    linear-gradient(125deg, #ece8de 0%, #cbd7e8 42%, #0b31a0 100%);
+    radial-gradient(circle at 50% 14%, rgba(255, 255, 255, 0.08), transparent 24rem),
+    linear-gradient(180deg, #0b0d13 0%, #050507 100%);
   filter: brightness(var(--brightness)) contrast(var(--contrast));
   touch-action: manipulation;
   user-select: none;
@@ -97,13 +95,13 @@ input {
 
 .statusbar {
   position: absolute;
-  top: max(34px, env(safe-area-inset-top));
-  left: max(34px, env(safe-area-inset-left));
-  right: max(48px, env(safe-area-inset-right));
+  top: max(22px, env(safe-area-inset-top));
+  left: max(28px, env(safe-area-inset-left));
+  right: max(32px, env(safe-area-inset-right));
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 44px;
+  min-height: 28px;
   color: rgba(255, 255, 255, 0.95);
   font-size: 13px;
   letter-spacing: 0;
@@ -112,12 +110,12 @@ input {
 .status-cluster {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
 }
 
 .silent-icon {
-  width: 34px;
-  height: 34px;
+  width: 22px;
+  height: 22px;
   display: grid;
   place-items: center;
   opacity: 0.88;
@@ -125,8 +123,8 @@ input {
 
 .speaker {
   position: relative;
-  width: 17px;
-  height: 18px;
+  width: 11px;
+  height: 12px;
   display: block;
 }
 
@@ -134,21 +132,21 @@ input {
   content: "";
   position: absolute;
   left: 1px;
-  top: 5px;
-  width: 6px;
-  height: 8px;
+  top: 3px;
+  width: 4px;
+  height: 6px;
   border-radius: 2px;
   background: #fff;
-  box-shadow: 7px -4px 0 -2px #fff, 7px 4px 0 -2px #fff;
+  box-shadow: 5px -3px 0 -2px #fff, 5px 3px 0 -2px #fff;
 }
 
 .speaker::after {
   content: "";
   position: absolute;
   left: -2px;
-  top: 8px;
-  width: 24px;
-  height: 3px;
+  top: 5px;
+  width: 16px;
+  height: 2px;
   border-radius: 999px;
   background: #fff;
   transform: rotate(48deg);
@@ -156,52 +154,52 @@ input {
 
 .wifi-icon {
   position: relative;
-  width: 40px;
-  height: 28px;
+  width: 24px;
+  height: 17px;
   display: block;
 }
 
 .wifi-icon span {
   position: absolute;
   left: 50%;
-  border: 5px solid transparent;
+  border: 3px solid transparent;
   border-top-color: #fff;
   border-radius: 50%;
   transform: translateX(-50%);
 }
 
 .wifi-icon span:nth-child(1) {
-  top: 1px;
-  width: 40px;
-  height: 40px;
+  top: 0;
+  width: 24px;
+  height: 24px;
 }
 
 .wifi-icon span:nth-child(2) {
-  top: 9px;
-  width: 28px;
-  height: 28px;
+  top: 5px;
+  width: 16px;
+  height: 16px;
 }
 
 .wifi-icon span:nth-child(3) {
-  top: 18px;
-  width: 13px;
-  height: 13px;
+  top: 11px;
+  width: 7px;
+  height: 7px;
   border-width: 0;
   background: #fff;
 }
 
 .battery-pill {
   position: relative;
-  min-width: 68px;
-  height: 35px;
+  min-width: 40px;
+  height: 22px;
   display: grid;
   place-items: center;
-  border: 3px solid rgba(255, 255, 255, 0.88);
-  border-radius: 11px;
+  border: 2px solid rgba(255, 255, 255, 0.88);
+  border-radius: 7px;
   background: rgba(255, 255, 255, 0.12);
   color: #1d2340;
   overflow: visible;
-  font-size: 22px;
+  font-size: 13px;
   font-weight: 900;
   font-variant-numeric: tabular-nums;
 }
@@ -209,19 +207,19 @@ input {
 .battery-pill::after {
   content: "";
   position: absolute;
-  right: -7px;
-  top: 9px;
-  width: 4px;
-  height: 13px;
+  right: -5px;
+  top: 6px;
+  width: 3px;
+  height: 8px;
   border-radius: 0 4px 4px 0;
   background: rgba(255, 255, 255, 0.88);
 }
 
 .battery-fill {
   position: absolute;
-  inset: 3px;
+  inset: 2px;
   width: 51%;
-  border-radius: 6px;
+  border-radius: 4px;
   background: rgba(255, 255, 255, 0.9);
 }
 

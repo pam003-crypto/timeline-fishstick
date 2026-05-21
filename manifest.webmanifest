@@ -1,0 +1,10 @@
+{
+  "name": "Time Rewind Performance",
+  "short_name": "Rewind",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "background_color": "#050507",
+  "theme_color": "#050507",
+  "orientation": "portrait",
+  "icons": []
+}

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#050507" />
+    <title>Time Rewind Performance</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./styles.css?v=10" />
+  </head>
+  <body>
+    <main class="stage" id="stage" aria-label="时间倒退演出屏幕">
+      <section class="clock-face" id="clockFace">
+        <div class="statusbar" aria-hidden="true">
+          <span id="statusCarrier">演出模式</span>
+          <span class="status-icons">●●● 5G ▰</span>
+        </div>
+
+        <div class="time-wrap">
+          <div class="date-line" id="dateLine"></div>
+          <div class="time-display" id="timeDisplay">
+            <span id="hourText">12</span><span class="colon" id="colon">:</span><span id="minuteText">00</span>
+          </div>
+          <div class="seconds-row">
+            <span id="secondText">00</span>
+            <span class="direction" id="directionText">LIVE</span>
+          </div>
+        </div>
+
+        <div class="wake-hint" id="wakeHint">轻触屏幕开始</div>
+      </section>
+
+      <button class="corner-hit corner-left" id="settingsHit" aria-label="打开设置"></button>
+      <button class="corner-hit corner-right" id="peekHit" aria-label="偷看触发时间"></button>
+      <div class="tap-grid" id="tapGrid" aria-hidden="true"></div>
+
+      <aside class="settings-panel" id="settingsPanel" aria-label="设置面板">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Performance</p>
+            <h1>Time Rewind</h1>
+          </div>
+          <button class="icon-button" id="closeSettings" aria-label="关闭设置">×</button>
+        </div>
+
+        <div class="control-row">
+          <label for="targetMinutes">倒退分钟</label>
+          <div class="stepper">
+            <button data-step="-1" class="step-button" aria-label="减少一分钟">−</button>
+            <input id="targetMinutes" type="number" min="1" max="120" value="5" />
+            <button data-step="1" class="step-button" aria-label="增加一分钟">+</button>
+          </div>
+        </div>
+
+        <div class="control-row target-row">
+          <label>当前目标</label>
+          <div class="target-chip" id="targetChip">-00:05</div>
+        </div>
+
+        <div class="control-row">
+          <label for="delaySeconds">触发延迟</label>
+          <input id="delaySeconds" type="range" min="0" max="10" value="1" />
+          <output id="delayOut">1s</output>
+        </div>
+
+        <div class="control-row">
+          <label for="speed">动画速度</label>
+          <input id="speed" type="range" min="0.4" max="3" step="0.1" value="1.2" />
+          <output id="speedOut">1.2x</output>
+        </div>
+
+        <div class="control-row">
+          <label for="brightness">亮度</label>
+          <input id="brightness" type="range" min="55" max="120" value="94" />
+          <output id="brightnessOut">94%</output>
+        </div>
+
+        <div class="control-row">
+          <label for="contrast">对比度</label>
+          <input id="contrast" type="range" min="70" max="150" value="108" />
+          <output id="contrastOut">108%</output>
+        </div>
+
+        <div class="control-row">
+          <label for="clockY">时间位置</label>
+          <input id="clockY" type="range" min="-38" max="8" value="-22" />
+          <output id="clockYOut">-22vh</output>
+        </div>
+
+        <div class="control-row">
+          <label for="clockScale">数字大小</label>
+          <input id="clockScale" type="range" min="75" max="135" value="100" />
+          <output id="clockScaleOut">100%</output>
+        </div>
+
+        <div class="control-row">
+          <label for="clockStretch">横向拉伸</label>
+          <input id="clockStretch" type="range" min="82" max="128" value="100" />
+          <output id="clockStretchOut">100%</output>
+        </div>
+
+        <div class="control-row">
+          <label for="glassBlur">毛玻璃</label>
+          <input id="glassBlur" type="range" min="0" max="40" value="24" />
+          <output id="glassBlurOut">24px</output>
+        </div>
+
+        <div class="control-row wallpaper-row">
+          <label for="wallpaperInput">自定义壁纸</label>
+          <input id="wallpaperInput" type="file" accept="image/*" />
+          <button class="secondary small-action" id="clearWallpaper" type="button">清除</button>
+        </div>
+
+        <fieldset class="segmented" aria-label="时间格式">
+          <legend>时间格式</legend>
+          <label><input type="radio" name="format" value="24" checked /> 24h</label>
+          <label><input type="radio" name="format" value="12" /> 12h</label>
+        </fieldset>
+
+        <div class="toggle-list">
+          <label><input type="checkbox" id="showGrid" checked /> 显示网格</label>
+          <label><input type="checkbox" id="skipZero" /> 网格跳过 0</label>
+          <label><input type="checkbox" id="haptics" checked /> 触发震动</label>
+          <label><input type="checkbox" id="alwaysOn" /> 常亮演出屏</label>
+        </div>
+
+        <div class="button-row">
+          <button class="primary" id="armButton">准备演出</button>
+          <button class="secondary" id="resetButton">重置时间</button>
+        </div>
+      </aside>
+
+      <div class="peek-card" id="peekCard" role="status" aria-live="polite"></div>
+    </main>
+
+    <script src="./app.js?v=10"></script>
+  </body>
+</html>

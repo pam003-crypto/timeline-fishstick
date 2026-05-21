@@ -845,16 +845,116 @@ input[type="range"]::-webkit-slider-thumb {
   }
 
   .settings-panel {
-    left: 14px;
+    top: auto;
+    left: 10px;
+    right: 10px;
+    bottom: max(10px, env(safe-area-inset-bottom));
     width: auto;
+    max-height: min(38vh, 330px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-content: start;
+    gap: 9px 10px;
+    padding: 12px;
+    border-radius: 24px;
+    transform: translateY(calc(100% + 20px));
+    overscroll-behavior: contain;
+  }
+
+  .settings-panel.open {
+    transform: translateY(0);
+  }
+
+  .settings-panel::before {
+    height: 32px;
+    border-radius: 23px 23px 14px 14px;
+  }
+
+  .panel-head,
+  .button-row,
+  .segmented,
+  .toggle-list,
+  .wallpaper-row {
+    grid-column: 1 / -1;
+  }
+
+  .panel-head {
+    min-height: 34px;
+  }
+
+  .panel-head h1 {
+    font-size: 17px;
+  }
+
+  .eyebrow {
+    display: none;
+  }
+
+  .icon-button,
+  .step-button {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
   }
 
   .control-row {
+    min-height: 58px;
     align-items: stretch;
-    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.05);
   }
 
   .control-row label {
     width: 100%;
+    font-size: 11px;
+  }
+
+  .control-row output {
+    min-width: 0;
+    text-align: left;
+    font-size: 11px;
+  }
+
+  .control-row input[type="range"] {
+    width: 100%;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+    margin-top: -6.5px;
+  }
+
+  .stepper {
+    justify-content: space-between;
+  }
+
+  .stepper input {
+    width: 54px;
+    height: 32px;
+  }
+
+  .segmented,
+  .toggle-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+  }
+
+  .segmented label,
+  .toggle-list label {
+    min-height: 34px;
+    padding: 7px 9px;
+    font-size: 12px;
+  }
+
+  .primary,
+  .secondary {
+    min-height: 36px;
+    font-size: 13px;
   }
 }

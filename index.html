@@ -6,14 +6,24 @@
     <meta name="theme-color" content="#050507" />
     <title>Time Rewind Performance</title>
     <link rel="manifest" href="./manifest.webmanifest" />
-    <link rel="stylesheet" href="./styles.css?v=10" />
+    <link rel="stylesheet" href="./styles.css?v=19" />
   </head>
   <body>
     <main class="stage" id="stage" aria-label="时间倒退演出屏幕">
       <section class="clock-face" id="clockFace">
         <div class="statusbar" aria-hidden="true">
-          <span id="statusCarrier">演出模式</span>
-          <span class="status-icons">●●● 5G ▰</span>
+          <div class="silent-icon" aria-label="静音">
+            <span class="speaker"></span>
+          </div>
+          <div class="status-cluster">
+            <span class="wifi-icon" aria-label="Wi-Fi">
+              <span></span><span></span><span></span>
+            </span>
+            <span class="battery-pill" aria-label="电量">
+              <span class="battery-level" id="batteryLevel">51</span>
+              <span class="battery-fill" id="batteryFill"></span>
+            </span>
+          </div>
         </div>
 
         <div class="time-wrap">
@@ -26,6 +36,16 @@
             <span class="direction" id="directionText">LIVE</span>
           </div>
         </div>
+
+        <div class="lock-actions" aria-hidden="true">
+          <button class="lock-action" type="button" tabindex="-1" aria-label="手电筒">
+            <span class="torch-icon"></span>
+          </button>
+          <button class="lock-action" type="button" tabindex="-1" aria-label="相机">
+            <span class="camera-icon"></span>
+          </button>
+        </div>
+        <div class="home-indicator" aria-hidden="true"></div>
 
         <div class="wake-hint" id="wakeHint">轻触屏幕开始</div>
       </section>
@@ -83,13 +103,13 @@
 
         <div class="control-row">
           <label for="clockY">时间位置</label>
-          <input id="clockY" type="range" min="-38" max="8" value="-22" />
-          <output id="clockYOut">-22vh</output>
+          <input id="clockY" type="range" min="-20" max="18" value="0" />
+          <output id="clockYOut">0vh</output>
         </div>
 
         <div class="control-row">
           <label for="clockScale">数字大小</label>
-          <input id="clockScale" type="range" min="75" max="135" value="100" />
+          <input id="clockScale" type="range" min="75" max="145" value="100" />
           <output id="clockScaleOut">100%</output>
         </div>
 
@@ -101,8 +121,8 @@
 
         <div class="control-row">
           <label for="glassBlur">毛玻璃</label>
-          <input id="glassBlur" type="range" min="0" max="40" value="24" />
-          <output id="glassBlurOut">24px</output>
+          <input id="glassBlur" type="range" min="0" max="40" value="26" />
+          <output id="glassBlurOut">26px</output>
         </div>
 
         <div class="control-row wallpaper-row">
@@ -133,6 +153,6 @@
       <div class="peek-card" id="peekCard" role="status" aria-live="polite"></div>
     </main>
 
-    <script src="./app.js?v=10"></script>
+    <script src="./app.js?v=19"></script>
   </body>
 </html>

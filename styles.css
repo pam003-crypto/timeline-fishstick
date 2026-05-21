@@ -12,10 +12,10 @@
   --brightness: 94%;
   --contrast: 108%;
   --wallpaper-image: none;
-  --clock-y: -22vh;
+  --clock-y: 0vh;
   --clock-scale: 1;
   --clock-stretch: 1;
-  --glass-blur: 24px;
+  --glass-blur: 26px;
   --glass-opacity: 0.22;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
 }
@@ -43,8 +43,10 @@ input {
   min-height: 100dvh;
   overflow: hidden;
   background:
-    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.08), transparent 28rem),
-    linear-gradient(180deg, #090a0f 0%, #030305 100%);
+    radial-gradient(ellipse 90% 44% at 31% 79%, rgba(90, 211, 207, 0.82) 0 30%, rgba(17, 97, 132, 0.68) 44%, transparent 68%),
+    radial-gradient(ellipse 52% 48% at 71% 26%, rgba(133, 142, 230, 0.9) 0 42%, rgba(36, 59, 161, 0.76) 61%, transparent 72%),
+    radial-gradient(ellipse 74% 48% at 18% 31%, rgba(247, 244, 226, 0.96) 0 38%, transparent 58%),
+    linear-gradient(125deg, #ece8de 0%, #cbd7e8 42%, #0b31a0 100%);
   filter: brightness(var(--brightness)) contrast(var(--contrast));
   touch-action: manipulation;
   user-select: none;
@@ -74,8 +76,8 @@ input {
   inset: 0;
   z-index: 1;
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  padding: max(18px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
+  grid-template-rows: auto 1fr;
+  padding: max(34px, env(safe-area-inset-top)) max(48px, env(safe-area-inset-right)) max(26px, env(safe-area-inset-bottom)) max(34px, env(safe-area-inset-left));
   transition: opacity 240ms ease, transform 240ms ease;
 }
 
@@ -94,24 +96,147 @@ input {
 }
 
 .statusbar {
+  position: absolute;
+  top: max(34px, env(safe-area-inset-top));
+  left: max(34px, env(safe-area-inset-left));
+  right: max(48px, env(safe-area-inset-right));
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 24px;
-  color: rgba(255, 255, 255, 0.82);
+  min-height: 44px;
+  color: rgba(255, 255, 255, 0.95);
   font-size: 13px;
   letter-spacing: 0;
 }
 
-.status-icons {
-  font-size: 11px;
+.status-cluster {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.silent-icon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  opacity: 0.88;
+}
+
+.speaker {
+  position: relative;
+  width: 17px;
+  height: 18px;
+  display: block;
+}
+
+.speaker::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: 5px;
+  width: 6px;
+  height: 8px;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 7px -4px 0 -2px #fff, 7px 4px 0 -2px #fff;
+}
+
+.speaker::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: 8px;
+  width: 24px;
+  height: 3px;
+  border-radius: 999px;
+  background: #fff;
+  transform: rotate(48deg);
+}
+
+.wifi-icon {
+  position: relative;
+  width: 40px;
+  height: 28px;
+  display: block;
+}
+
+.wifi-icon span {
+  position: absolute;
+  left: 50%;
+  border: 5px solid transparent;
+  border-top-color: #fff;
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.wifi-icon span:nth-child(1) {
+  top: 1px;
+  width: 40px;
+  height: 40px;
+}
+
+.wifi-icon span:nth-child(2) {
+  top: 9px;
+  width: 28px;
+  height: 28px;
+}
+
+.wifi-icon span:nth-child(3) {
+  top: 18px;
+  width: 13px;
+  height: 13px;
+  border-width: 0;
+  background: #fff;
+}
+
+.battery-pill {
+  position: relative;
+  min-width: 68px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  border: 3px solid rgba(255, 255, 255, 0.88);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #1d2340;
+  overflow: visible;
+  font-size: 22px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.battery-pill::after {
+  content: "";
+  position: absolute;
+  right: -7px;
+  top: 9px;
+  width: 4px;
+  height: 13px;
+  border-radius: 0 4px 4px 0;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.battery-fill {
+  position: absolute;
+  inset: 3px;
+  width: 51%;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.battery-level {
+  position: relative;
+  z-index: 1;
 }
 
 .time-wrap {
   position: relative;
-  align-self: center;
+  grid-row: 2;
+  align-self: start;
   justify-self: center;
-  width: min(92vw, 560px);
+  width: min(94vw, 860px);
+  margin-top: clamp(100px, 16vh, 160px);
   padding: 0 clamp(8px, 2vw, 18px);
   text-align: center;
   transform: translateY(var(--clock-y)) scale(var(--clock-scale)) scaleX(var(--clock-stretch));
@@ -124,17 +249,18 @@ input {
 
 .date-line {
   min-height: 26px;
-  margin-bottom: 8px;
-  color: rgba(255, 255, 255, 0.74);
-  font-size: clamp(17px, 2.4vw, 23px);
-  font-weight: 500;
+  margin-bottom: 2px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(22px, 5.2vw, 42px);
+  font-weight: 800;
+  text-shadow: 0 2px 18px rgba(26, 44, 94, 0.22);
 }
 
 .time-display {
   display: flex;
   justify-content: center;
   align-items: baseline;
-  min-height: clamp(96px, 24vw, 170px);
+  min-height: clamp(160px, 38vw, 330px);
   color: transparent;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.58) 42%, rgba(255, 255, 255, 0.9) 100%),
@@ -146,8 +272,8 @@ input {
   -webkit-background-clip: text;
   background-clip: text;
   font-variant-numeric: tabular-nums;
-  font-size: clamp(76px, 23vw, 168px);
-  font-weight: 200;
+  font-size: clamp(108px, 28vw, 260px);
+  font-weight: 800;
   line-height: 0.95;
   letter-spacing: 0;
   filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.62)) drop-shadow(0 22px calc(var(--glass-blur) * 1.4) rgba(0, 0, 0, 0.32));
@@ -155,7 +281,7 @@ input {
     0 0 calc(var(--glass-blur) * 0.42) rgba(255, 255, 255, 0.42),
     0 2px 0 rgba(255, 255, 255, 0.16),
     0 -1px 0 rgba(0, 0, 0, 0.2);
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.18);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.24);
 }
 
 .colon {
@@ -246,6 +372,7 @@ input {
 }
 
 .wake-hint {
+  display: none;
   position: absolute;
   left: 50%;
   bottom: calc(env(safe-area-inset-bottom) + 34px);
@@ -258,6 +385,110 @@ input {
 
 .stage.idle .wake-hint {
   opacity: 1;
+}
+
+.lock-actions {
+  position: absolute;
+  left: max(56px, calc(env(safe-area-inset-left) + 42px));
+  right: max(56px, calc(env(safe-area-inset-right) + 42px));
+  bottom: max(58px, calc(env(safe-area-inset-bottom) + 48px));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.lock-action {
+  width: clamp(66px, 12vw, 92px);
+  height: clamp(66px, 12vw, 92px);
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.32),
+    inset 0 -16px 28px rgba(22, 89, 112, 0.16),
+    0 14px 40px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(18px) saturate(1.45);
+  -webkit-backdrop-filter: blur(18px) saturate(1.45);
+}
+
+.torch-icon,
+.camera-icon {
+  position: relative;
+  display: block;
+}
+
+.torch-icon {
+  width: 28px;
+  height: 42px;
+}
+
+.torch-icon::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 0;
+  width: 22px;
+  height: 9px;
+  border-radius: 3px 3px 7px 7px;
+  background: #fff;
+}
+
+.torch-icon::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 10px;
+  width: 12px;
+  height: 30px;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: inset 0 -13px 0 rgba(0, 0, 0, 0.24);
+}
+
+.camera-icon {
+  width: 42px;
+  height: 31px;
+  border-radius: 7px;
+  background: #fff;
+}
+
+.camera-icon::before {
+  content: "";
+  position: absolute;
+  right: 4px;
+  top: 5px;
+  width: 6px;
+  height: 5px;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 -3px 0 -1px #fff;
+}
+
+.camera-icon::after {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 7px;
+  width: 16px;
+  height: 16px;
+  border: 4px solid rgba(33, 56, 70, 0.72);
+  border-radius: 50%;
+}
+
+.home-indicator {
+  position: absolute;
+  left: 50%;
+  bottom: max(10px, env(safe-area-inset-bottom));
+  width: min(36vw, 180px);
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  transform: translateX(-50%);
+  box-shadow: 0 1px 18px rgba(0, 0, 0, 0.18);
 }
 
 .corner-hit {
@@ -512,6 +743,11 @@ input {
 @media (max-width: 640px) {
   .clock-face {
     padding-inline: 18px;
+  }
+
+  .statusbar {
+    left: 34px;
+    right: 48px;
   }
 
   .settings-panel {

@@ -6,6 +6,8 @@ const els = {
   secondText: document.getElementById("secondText"),
   directionText: document.getElementById("directionText"),
   targetChip: document.getElementById("targetChip"),
+  batteryLevel: document.getElementById("batteryLevel"),
+  batteryFill: document.getElementById("batteryFill"),
   railGlow: document.getElementById("railGlow"),
   tickStrip: document.getElementById("tickStrip"),
   tapGrid: document.getElementById("tapGrid"),
@@ -54,10 +56,12 @@ const state = {
 };
 
 const weekdayFormatter = new Intl.DateTimeFormat("zh-CN", {
-  weekday: "long",
+  weekday: "short",
   month: "long",
   day: "numeric",
 });
+
+const lunarDayNames = ["初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十", "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十", "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十"];
 
 function pad(value) {
   return String(value).padStart(2, "0");
@@ -78,10 +82,27 @@ function formatTime(date) {
 
 function renderTime(date = state.displayDate) {
   const parts = formatTime(date);
-  els.dateLine.textContent = weekdayFormatter.format(date);
+  els.dateLine.textContent = `${weekdayFormatter.format(date)} · ${formatLunar(date)}`;
   els.hourText.textContent = parts.hours;
   els.minuteText.textContent = parts.minutes;
   els.secondText.textContent = parts.seconds;
+}
+
+function formatLunar(date) {
+  try {
+    const formatted = new Intl.DateTimeFormat("zh-CN-u-ca-chinese", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }).format(date);
+    const normalized = formatted.replace(/\s/g, "");
+    const dayMatch = normalized.match(/(\d{1,2})$/);
+    if (!dayMatch) return normalized;
+    const day = Number(dayMatch[1]);
+    return normalized.replace(/^\d{4}/, "").replace(/\d{1,2}$/, lunarDayNames[day - 1] || dayMatch[1]);
+  } catch {
+    return "";
+  }
 }
 
 function readSettings() {
@@ -129,6 +150,7 @@ function syncOutputs() {
 function persistSettings() {
   const format = document.querySelector("input[name='format']:checked").value;
   const payload = {
+    displayPresetVersion: "ios26-v2",
     targetMinutes: els.targetMinutes.value,
     delaySeconds: els.delaySeconds.value,
     speed: els.speed.value,
@@ -149,6 +171,12 @@ function persistSettings() {
 
 function loadSettings() {
   const saved = JSON.parse(localStorage.getItem("time-rewind-settings") || "{}");
+  if (saved.displayPresetVersion !== "ios26-v2") {
+    saved.clockY = "0";
+    saved.clockScale = "100";
+    saved.clockStretch = "100";
+    saved.glassBlur = "26";
+  }
   for (const [key, value] of Object.entries(saved)) {
     if (key === "format") {
       const option = document.querySelector(`input[name='format'][value='${value}']`);
@@ -447,6 +475,27 @@ function bindEvents() {
   });
 }
 
+function renderBattery(level) {
+  const percent = clamp(Math.round(level), 1, 100);
+  els.batteryLevel.textContent = String(percent);
+  els.batteryFill.style.width = `${percent}%`;
+}
+
+async function initBattery() {
+  renderBattery(51);
+  if (!navigator.getBattery) return;
+
+  try {
+    const battery = await navigator.getBattery();
+    const update = () => renderBattery(battery.level * 100);
+    update();
+    battery.addEventListener("levelchange", update);
+    battery.addEventListener("chargingchange", update);
+  } catch {
+    renderBattery(51);
+  }
+}
+
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js").catch(() => {});
 }
@@ -457,3 +506,4 @@ bindEvents();
 syncOutputs();
 startLiveClock();
 syncWakeLock();
+initBattery();

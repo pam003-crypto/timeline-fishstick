@@ -485,6 +485,23 @@ function syncDisplayMode() {
   els.stage.classList.toggle("browser-mode", !standalone);
 }
 
+function bindLiquidTilt() {
+  if (matchMedia("(pointer: coarse)").matches) return;
+
+  window.addEventListener("pointermove", (event) => {
+    const x = event.clientX / window.innerWidth - 0.5;
+    const y = event.clientY / window.innerHeight - 0.5;
+
+    document.documentElement.style.setProperty("--tilt-x", `${x * 12}px`);
+    document.documentElement.style.setProperty("--tilt-y", `${y * 12}px`);
+  });
+
+  window.addEventListener("pointerleave", () => {
+    document.documentElement.style.setProperty("--tilt-x", "0px");
+    document.documentElement.style.setProperty("--tilt-y", "0px");
+  });
+}
+
 function renderBattery(level) {
   const percent = clamp(Math.round(level), 1, 100);
   els.batteryLevel.textContent = String(percent);
@@ -516,6 +533,7 @@ window.matchMedia("(display-mode: fullscreen)").addEventListener("change", syncD
 loadSettings();
 loadWallpaper();
 bindEvents();
+bindLiquidTilt();
 syncOutputs();
 startLiveClock();
 syncWakeLock();

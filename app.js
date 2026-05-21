@@ -503,12 +503,14 @@ function bindLiquidTilt() {
 }
 
 function renderBattery(level) {
+  if (!els.batteryLevel || !els.batteryFill) return;
   const percent = clamp(Math.round(level), 1, 100);
   els.batteryLevel.textContent = String(percent);
   els.batteryFill.style.width = `${percent}%`;
 }
 
 async function initBattery() {
+  if (!els.batteryLevel || !els.batteryFill) return;
   renderBattery(51);
   if (!navigator.getBattery) return;
 

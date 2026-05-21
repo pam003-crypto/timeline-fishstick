@@ -95,9 +95,9 @@ input {
 
 .statusbar {
   position: absolute;
-  top: max(22px, env(safe-area-inset-top));
-  left: max(28px, env(safe-area-inset-left));
-  right: max(32px, env(safe-area-inset-right));
+  top: calc(env(safe-area-inset-top) + 8px);
+  left: calc(env(safe-area-inset-left) + 22px);
+  right: calc(env(safe-area-inset-right) + 24px);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -105,6 +105,10 @@ input {
   color: rgba(255, 255, 255, 0.95);
   font-size: 13px;
   letter-spacing: 0;
+}
+
+.stage.browser-mode .statusbar {
+  display: none;
 }
 
 .status-cluster {
@@ -741,11 +745,6 @@ input {
 @media (max-width: 640px) {
   .clock-face {
     padding-inline: 18px;
-  }
-
-  .statusbar {
-    left: 34px;
-    right: 48px;
   }
 
   .settings-panel {

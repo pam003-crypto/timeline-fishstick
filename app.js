@@ -475,6 +475,16 @@ function bindEvents() {
   });
 }
 
+function syncDisplayMode() {
+  const standalone =
+    window.navigator.standalone === true ||
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.matchMedia("(display-mode: fullscreen)").matches;
+
+  els.stage.classList.toggle("standalone-mode", standalone);
+  els.stage.classList.toggle("browser-mode", !standalone);
+}
+
 function renderBattery(level) {
   const percent = clamp(Math.round(level), 1, 100);
   els.batteryLevel.textContent = String(percent);
@@ -500,6 +510,9 @@ if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js").catch(() => {});
 }
 
+syncDisplayMode();
+window.matchMedia("(display-mode: standalone)").addEventListener("change", syncDisplayMode);
+window.matchMedia("(display-mode: fullscreen)").addEventListener("change", syncDisplayMode);
 loadSettings();
 loadWallpaper();
 bindEvents();

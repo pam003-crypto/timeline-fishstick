@@ -88,7 +88,6 @@ function renderTime(date = state.displayDate) {
   els.minuteText.textContent = parts.minutes;
   els.secondText.textContent = parts.seconds;
   els.dateLine.textContent = `${weekdayFormatter.format(date)} · ${formatLunar(date)}`;
-  els.timeDisplay.setAttribute("data-time", `${parts.hours}:${parts.minutes}`);
 }
 
 function formatLunar(date) {

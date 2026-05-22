@@ -1,5 +1,5 @@
-const CACHE_NAME = "time-rewind-performance-v26";
-const ASSETS = ["./", "./index.html", "./styles.css?v=26", "./app.js?v=26", "./manifest.webmanifest"];
+const CACHE_NAME = "time-rewind-performance-v27";
+const ASSETS = ["./", "./index.html", "./styles.css?v=27", "./app.js?v=27", "./manifest.webmanifest"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));

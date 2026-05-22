@@ -10,9 +10,21 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>Time Rewind Performance</title>
     <link rel="manifest" href="./manifest.webmanifest" />
-    <link rel="stylesheet" href="./styles.css?v=26" />
+    <link rel="stylesheet" href="./styles.css?v=27" />
   </head>
   <body>
+    <svg class="liquid-defs" aria-hidden="true" focusable="false">
+      <filter id="liquidGlassText" x="-12%" y="-18%" width="124%" height="136%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.026" numOctaves="2" seed="8" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="7" xChannelSelector="R" yChannelSelector="G" result="warp" />
+        <feGaussianBlur in="warp" stdDeviation="0.16" result="softWarp" />
+        <feMerge>
+          <feMergeNode in="softWarp" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </svg>
+
     <main class="stage" id="stage" aria-label="时间倒退演出屏幕">
       <section class="clock-face" id="clockFace">
         <div class="time-wrap">
@@ -142,6 +154,6 @@
       <div class="peek-card" id="peekCard" role="status" aria-live="polite"></div>
     </main>
 
-    <script src="./app.js?v=26"></script>
+    <script src="./app.js?v=27"></script>
   </body>
 </html>

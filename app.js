@@ -1,6 +1,7 @@
 const els = {
   stage: document.getElementById("stage"),
   dateLine: document.getElementById("dateLine"),
+  timeDisplay: document.getElementById("timeDisplay"),
   hourText: document.getElementById("hourText"),
   minuteText: document.getElementById("minuteText"),
   secondText: document.getElementById("secondText"),
@@ -86,6 +87,8 @@ function renderTime(date = state.displayDate) {
   els.hourText.textContent = parts.hours;
   els.minuteText.textContent = parts.minutes;
   els.secondText.textContent = parts.seconds;
+  els.dateLine.textContent = `${weekdayFormatter.format(date)} · ${formatLunar(date)}`;
+  els.timeDisplay.setAttribute("data-time", `${parts.hours}:${parts.minutes}`);
 }
 
 function formatLunar(date) {
